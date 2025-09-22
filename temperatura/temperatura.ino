@@ -14,6 +14,7 @@
 
 //Definição dos Feeds
 AdafruitIO_Feed *botaoalarme = io.feed("botaoalarme");
+AdafruitIO_Feed *distanciaultrassonico = io.feed("distanciaultrassonico");
 
 // Variáveis de controle
 bool alarmeAtivo = false;
@@ -105,6 +106,10 @@ void loop() {
   Serial.println(distancia);
   Serial.println(" cm");
 
+if(distancia != 0){
+  //só envia distancias válidas
+  distanciaultrassonico -> save(distancia);
+}
   //ativação ou desativação do alarme
   if(alarmeAtivo && distancia > 0 && distancia < LIMITE_DISTANCIA){
     ativarAlerta();
@@ -112,4 +117,6 @@ void loop() {
   else{
     desligarAlerta();
   }
+
+  delay(3000);
 }
